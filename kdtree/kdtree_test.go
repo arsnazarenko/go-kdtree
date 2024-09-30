@@ -7,13 +7,13 @@ func TestKDTree_Insert(t *testing.T) {
 
 	// Test cases
 	testCases := []struct {
-		name     string
-		key      Point
-		value    string
+		name  string
+		key   Point
+		value string
 	}{
 		{"KDTree insert testcase 1", []float64{3, 4}, "Value 1"},
 		{"KDTree insert testcase 2", []float64{5, 6}, "Value 2"},
-		{"KDTree insert testcase 3", []float64{2, 7}, "Value 3"}, 
+		{"KDTree insert testcase 3", []float64{2, 7}, "Value 3"},
 	}
 
 	for _, testCase := range testCases {
@@ -21,13 +21,13 @@ func TestKDTree_Insert(t *testing.T) {
 			tree := NewKDTree[string](2)
 			tree.Insert(testCase.key, testCase.value)
 			// Check by get
-            entry, err := tree.Get(testCase.key) 
-            if err != nil {
+			entry, err := tree.Get(testCase.key)
+			if err != nil {
 				t.Errorf("Expected value by key %v not found", testCase.key)
-            }
+			}
 
 			if !equalPoints(entry.Key, testCase.key) || entry.Value != testCase.value {
-                   t.Errorf("Expected value to be [%v, %s], got [%v, %s]", testCase.key, testCase.value, entry.Key, entry.Value)
+				t.Errorf("Expected value to be [%v, %s], got [%v, %s]", testCase.key, testCase.value, entry.Key, entry.Value)
 			}
 
 		})
@@ -94,7 +94,7 @@ func TestKDTree_Get(t *testing.T) {
 
 	// Test cases
 	testCases := []struct {
-        name string
+		name     string
 		keys     []Point  // Points to insert
 		values   []string // Values to insert
 		query    Point    // Query point
@@ -130,23 +130,23 @@ func TestKDTree_Get(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-        t.Run(testCase.name, func(t *testing.T) {
-	    tree := NewKDTree[string](2)
-		for i, key := range testCase.keys {
-			tree.Insert(key, testCase.values[i])
-		}
+		t.Run(testCase.name, func(t *testing.T) {
+			tree := NewKDTree[string](2)
+			for i, key := range testCase.keys {
+				tree.Insert(key, testCase.values[i])
+			}
 
-		entry, err := tree.Get(testCase.query)
-		if err != nil && testCase.found {
-			t.Errorf("Error during GetNode: %v", err)
-		} else if err == nil && !testCase.found {
-			t.Errorf("Expected error but got nil")
-		}
-		if entry != nil && entry.Value != testCase.expected {
-			t.Errorf("Expected value to be %s, got %s", testCase.expected, entry.Value)
-		}
+			entry, err := tree.Get(testCase.query)
+			if err != nil && testCase.found {
+				t.Errorf("Error during GetNode: %v", err)
+			} else if err == nil && !testCase.found {
+				t.Errorf("Expected error but got nil")
+			}
+			if entry != nil && entry.Value != testCase.expected {
+				t.Errorf("Expected value to be %s, got %s", testCase.expected, entry.Value)
+			}
 
-        })
+		})
 	}
 }
 
@@ -162,4 +162,3 @@ func equalPoints(p1, p2 Point) bool {
 	}
 	return true
 }
-

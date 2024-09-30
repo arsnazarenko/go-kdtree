@@ -8,7 +8,7 @@ import (
 // Point represents a point in multi-dimensional space.
 type Point []float64
 
-// Entry хранит ключ (точка) и значение.
+
 type Entry[V any] struct {
 	Key   Point
 	Value V
@@ -22,7 +22,7 @@ type KDTree[V any] struct {
 
 // Node represents a node in the k-d tree.
 type Node[V any] struct {
-	entry    *Entry[V] // Храним Entry
+	entry    *Entry[V]
 	left     *Node[V]
 	right    *Node[V]
 	splitDim int // Dimension used for splitting
@@ -86,10 +86,10 @@ func (tree *KDTree[V]) insertRecursive(node *Node[V], key Point, value V, depth 
 func (tree *KDTree[V]) Get(key Point) (*Entry[V], error) {
 	node, err := tree.getNodeRecursive(tree.root, key, 0)
 	if err != nil {
-	    return nil, fmt.Errorf("entry with key %v not found", key)
+		return nil, fmt.Errorf("entry with key %v not found", key)
 	}
-    return node.entry, nil
-    
+	return node.entry, nil
+
 }
 
 // getNodeRecursive recursively searches for the node with the specified key.
@@ -163,4 +163,3 @@ func distance(p1, p2 Point) float64 {
 	}
 	return math.Sqrt(sum)
 }
-
