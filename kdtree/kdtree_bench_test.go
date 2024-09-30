@@ -31,7 +31,7 @@ func BenchmarkKDTree_NearestNeighbor(b *testing.B) {
 	ry := minV + rand.Float64()*(maxV-minV)
 
 	// Insert a large number of points for benchmarking.
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < b.N; i++ {
 		tree.Insert([]float64{float64(rx), float64(ry)}, fmt.Sprintf("Value %d", i))
 	}
 	b.ResetTimer()
